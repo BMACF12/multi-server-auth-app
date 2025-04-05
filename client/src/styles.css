@@ -1,0 +1,50 @@
+/* styles.css */
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #000; /* Fondo negro */
+}
+
+/* Título */
+.title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #fff; /* Texto blanco */
+}
+
+/* Inputs */
+.input {
+    padding: 10px;
+    margin: 10px 0;
+    width: 300px;
+    background-color: #007bff; /* Azul */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #fff; /* Texto blanco */
+}
+
+/* Botones */
+.button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Azul */
+    color: #fff; /* Texto blanco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+}
+
+/* Mensajes */
+.message {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #fff; /* Texto blanco */
+}
