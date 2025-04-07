@@ -1,6 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import './styles.css'; // Importa los estilos CSS
+
+// Componente de Registro
+function Register({ onRegister }) {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleRegister = async () => {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+
+        if (response.ok) {
+            alert('Usuario registrado correctamente.');
+            onRegister(); // Redirige al login después del registro
+        } else {
+            const errorData = await response.json();
+            alert(errorData.error || 'Error al registrar usuario.');
+        }
+    };
+
+    return (
+        <div className="container">
+            <h2 className="title">Registro</h2>
+            <input
+                type="text"
+                placeholder="Usuario"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="input"
+            />
+            <input
+                type="password"
+                placeholder="Contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input"
+            />
+            <button onClick={handleRegister} className="button">
+                Registrar
+            </button>
+            <p className="message">
+                ¿Ya tienes una cuenta? <Link to="/login" className="link">Inicia Sesión</Link>
+            </p>
+        </div>
+    );
+}
 
 // Componente de Login
 function Login({ onLogin }) {
@@ -115,6 +163,12 @@ function App() {
     return (
         <Router>
             <Routes>
+                {/* Ruta de registro */}
+                <Route
+                    path="/register"
+                    element={<Register onRegister={() => window.location.href = '/login'} />}
+                />
+
                 {/* Ruta pública */}
                 <Route
                     path="/login"

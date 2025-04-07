@@ -1,5 +1,3 @@
-/* styles.css */
-
 /* Contenedor principal */
 .container {
     display: flex;
@@ -47,4 +45,11 @@
     font-size: 1.2rem;
     margin: 10px 0;
     color: #fff; /* Texto blanco */
+}
+
+/* Enlaces */
+.link {
+    color: #007bff; /* Azul */
+    text-decoration: underline;
+    cursor: pointer;
 }
