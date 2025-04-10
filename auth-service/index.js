@@ -58,9 +58,23 @@ app.post('/api/login', [
         // Buscar el usuario en la base de datos
         const user = await User.findOne({ where: { username } });
 
-        if (!user || !bcrypt.compareSync(password, user.password)) {
+        console.log('🧾 Usuario encontrado:', user?.username);
+        console.log('🔑 Password enviada:', password);
+        console.log('🔐 Password guardada (hash):', user?.password);
+
+        if (!user) {
+            console.log('❌ Usuario no encontrado');
+            return res.status(401).json({ error: 'Usuario no encontrado' });
+        }
+
+        const passwordMatch = bcrypt.compareSync(password, user.password);
+        console.log('🧪 ¿Coincide contraseña?:', passwordMatch);
+
+        if (!passwordMatch) {
+            console.log('❌ Contraseña incorrecta');
             return res.status(401).json({ error: 'Credenciales incorrectas' });
         }
+
 
         // Generar token JWT
         const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: '1h' });
@@ -75,18 +89,18 @@ const sequelize = require('./database/sequelize'); // Importá la instancia Sequ
 
 // Sincronizar modelos con la base de datos
 sequelize.sync({ alter: true })
-  .then(() => {
-    console.log('Modelo sincronizado con la base de datos ✅');
+    .then(() => {
+        console.log('Modelo sincronizado con la base de datos ✅');
 
-    // Iniciar el servidor después de sincronizar
-    const PORT = 5002;
-    app.listen(PORT, "0.0.0.0", () => {
-        console.log(`Auth Service corriendo en http://0.0.0.0:${PORT}`);
+        // Iniciar el servidor después de sincronizar
+        const PORT = 5002;
+        app.listen(PORT, "0.0.0.0", () => {
+            console.log(`Auth Service corriendo en http://0.0.0.0:${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error('Error al sincronizar modelos:', err);
     });
-  })
-  .catch((err) => {
-    console.error('Error al sincronizar modelos:', err);
-});
 
 // Puerto del servidor
 //const PORT = 5002;
