@@ -71,8 +71,25 @@ app.post('/api/login', [
     }
 });
 
-// Puerto del servidor
-const PORT = 5002;
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Auth Service corriendo en http://0.0.0.0:${PORT}`);
+const sequelize = require('./database/sequelize'); // Importá la instancia Sequelize
+
+// Sincronizar modelos con la base de datos
+sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('Modelo sincronizado con la base de datos ✅');
+
+    // Iniciar el servidor después de sincronizar
+    const PORT = 5002;
+    app.listen(PORT, "0.0.0.0", () => {
+        console.log(`Auth Service corriendo en http://0.0.0.0:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Error al sincronizar modelos:', err);
 });
+
+// Puerto del servidor
+//const PORT = 5002;
+//app.listen(PORT, "0.0.0.0", () => {
+//    console.log(`Auth Service corriendo en http://0.0.0.0:${PORT}`);
+//});

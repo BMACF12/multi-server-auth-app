@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 // Configuración de la conexión a PostgreSQL
-const sequelize = new Sequelize('auth_db', 'admin', 'secret', {
+const sequelize = new Sequelize('auth_db', 'admin', 'admin123', {
     host: 'db', // Nombre del servicio en docker-compose.yml
     dialect: 'postgres'
 });

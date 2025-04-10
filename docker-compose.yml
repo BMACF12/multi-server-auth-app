@@ -61,14 +61,14 @@ services:
 
   # Servicio de PostgreSQL
   db:
-    image: postgres:15
+    image: postgres:latest
     container_name: postgres-container
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: secret
+      POSTGRES_PASSWORD: admin123
       POSTGRES_DB: auth_db
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - ./postgres-data:/var/lib/postgresql/data
     networks:
       - app-network
     ports:
@@ -78,7 +78,3 @@ services:
 networks:
   app-network:
     driver: bridge
-
-# Volúmenes persistentes
-volumes:
-  postgres-data:
